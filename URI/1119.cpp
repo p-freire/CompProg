@@ -1,5 +1,5 @@
 /*
-	This implementation is a mere simulation according to the input.
+	This implementation is a mere simulation of the input.
 	No closed formulas. No pruning. Pure and simple simulation.
 	The most annoying thing here is the way the output must be
 	formatted. Other than that, it is a straightforward problem.
@@ -53,7 +53,6 @@ int main()
 			{
 				printf(r <= 9 ? "  %d" : " %d", r);
 				printf(l <= 9 ? "  %d" : " %d", l);
-				//printf("  %d  %d", r, l);
 				people_counter -= 2;
 			}
 
