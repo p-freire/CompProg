@@ -17,12 +17,12 @@ using namespace std;
 
 lli solve(lli x) 
 {
-	lli ret = 0;
-	int d = (int)(sqrt(x));
-	for (int i = 1; i <= d; i++)
+    lli ret = 0;
+    int d = (int)(sqrt(x));
+    for (int i = 1; i <= d; i++)
     {
-		int l = x / (i + 1) + 1, r = x / i;
-		lli a1, an, n;
+	int l = x / (i + 1) + 1, r = x / i;
+	lli a1, an, n;
         if(l != r)
         {
             a1 = x % l;
@@ -54,8 +54,8 @@ lli gcd(lli a, lli b)
 
 int main() 
 {
-	lli n, divi, ans, den;
-	while(scanf("%lld", &n) != EOF)
+    lli n, divi, ans, den;
+    while(scanf("%lld", &n) != EOF)
     {
         den = n * n;
         ans = solve(n);
