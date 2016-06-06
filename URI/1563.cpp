@@ -35,7 +35,7 @@ lli solve(lli x)
 	}
 
 	for (int i = 1; i <= x / (d + 1); i++)
-        ret += x % i;
+            ret += x % i;
 
 	return ret;
 }
