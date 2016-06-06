@@ -1,14 +1,48 @@
+/*
+	Idea: calculate the square root of N and calculate
+	the arithmetic progression sums in the intervals
+	[N/(i+1) + 1, N/i], 1 <= i <= sqrt(N).
+	Then, calculate the rest of the remainders from
+	i = 1 to i = N/(sqrt(N) + 1).
+	Finally, get the greatest common divider using Euclid 
+	algorithm and simplify the fraction.
+*/
+
+#include <cmath>
+#include <iostream>
 #include <stdio.h>
-#include <stdlib.h>
-#define TAM 100000010
-typedef long long int lli;
 
-lli numbers[TAM];
+typedef long long lli;
+using namespace std;
 
-lli euclides(lli a, lli b)
+lli solve(lli x) {
+	lli ret = 0;
+	int d = (int)(sqrt(x));
+	for (int i = 1; i <= d; i++)
+    {
+		int l = x / (i + 1) + 1, r = x / i;
+		lli a1, an, n;
+        if(l != r)
+        {
+            a1 = x % l;
+            an = x % r;
+            n = (r - l) + 1;
+            ret += (a1 + an) * n / 2;
+        }
+        else
+            ret += x % l;
+	}
+
+	for (int i = 1; i <= x / (d + 1); i++)
+        ret += x % i;
+
+	return ret;
+}
+
+lli gcd(lli a, lli b)
 {
     lli r;
-    while(b != 0)
+    while(b)
     {
         r = a % b;
         a = b;
@@ -17,35 +51,14 @@ lli euclides(lli a, lli b)
     return a;
 }
 
-int main(int argc, char **argv)
-{
-    lli n, i, mod_sum, denominator, loop_prune;
-    //lli *numbers = (lli*)malloc(TAM * sizeof(lli));
-
-    for(i = 0; i < TAM; ++i)
-        numbers[i] = -1;
-
-    while(scanf("%lld", &n) != EOF)
+int main() {
+	lli n, divi, ans, den;
+	while(scanf("%lld", &n) != EOF)
     {
-        denominator = n * n;
-        if(numbers[n] == -1)
-        {
-            mod_sum = 0;
-            loop_prune = n / 2;
-
-            for(i = 2; i <= loop_prune; ++i)
-                mod_sum += n % i;
-
-            // from (n / 2) + 1, the remainders will form an arithmetic progression
-            // this value can be calculated effortlessly using a closed formula
-            lli remainder = n % (loop_prune + 1);
-            mod_sum += remainder > 1 ? ((1 + remainder) * remainder) / 2 : remainder;
-
-            numbers[n] = mod_sum;
-        }
-        lli divi = euclides(denominator, numbers[n]);
-        printf("%lld/%lld\n", numbers[n] / divi, denominator / divi);
+        den = n * n;
+        ans = solve(n);
+        divi = gcd(den, ans);
+        printf("%lld/%lld\n", ans / divi, den / divi);
     }
-    //free(numbers);
     return 0;
 }
